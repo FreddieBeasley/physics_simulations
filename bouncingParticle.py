@@ -1,4 +1,5 @@
 import math
+
 class Vector2:
      #initialise
      def __init__(self, Xcomponent, Ycomponent):
@@ -80,11 +81,11 @@ class Vector3(Vector2):
           self.updateY(dYvalue)
           self.updateZ(dZvalue)
      
-class particle:
+class Particle:
      def __init__(self):
           self.__displacement = Vector2(0,0)
-          self.__velocity = Vector2(0,0)
-          self.__acceleration = Vector2(0, -9.8)
+          self.__velocity = Vector2(2,2.5)
+          self.__acceleration = Vector2(0, -0.0098)
 
      #getter
      def get_displacementX(self):
@@ -123,10 +124,10 @@ class particle:
 
      def set_displacement(self, Xvalue=None, Yvalue=None):
           if Xvalue is not None:
-               self.set_displacementX(Xvalue)
+               self.__set_displacementX(Xvalue)
 
           if Yvalue is not None:
-               self.set_displacementY(Yvalue)
+               self.__set_displacementY(Yvalue)
      
      def __set_velocityX(self, value):
           self.__velocity.setX(value)
@@ -136,10 +137,10 @@ class particle:
      
      def set_velocity(self, Xvalue=None, Yvalue=None):
           if Xvalue is not None:
-               self.set_velocityX(Xvalue)
+               self.__set_velocityX(Xvalue)
 
           if Yvalue is not None:
-               self.set_velocityY(Yvalue)
+               self.__set_velocityY(Yvalue)
           
      def __set_accelerationX(self, Xvalue):
           self.__acceleration.setX(Xvalue)
@@ -149,20 +150,21 @@ class particle:
      
      def set_acceleration(self, Xvalue, Yvalue):
           if Xvalue is not None:
-               self.set_accelerationX(Xvalue)
+               self.__set_accelerationX(Xvalue)
           
           if Yvalue is not None:
-               self.set_accelerationY(Yvalue)
+               self.__set_accelerationY(Yvalue)
           
 
      #updater
      def update_displacement(self):
           new_displacementX = self.get_displacementX() + self.get_velocityX()
           new_displacementY = self.get_displacementY() + self.get_velocityY()
+
+          self.set_displacement(new_displacementX, new_displacementY)
      
      def update_velocity(self):
           new_velocityX = self.get_velocityX() + self.get_accelerationX()
           new_velocityY = self.get_velocityY() + self.get_accelerationY()
-     
-     
-     
+
+          self.set_velocity(new_velocityX,new_velocityY)
