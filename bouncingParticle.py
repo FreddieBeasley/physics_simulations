@@ -12,20 +12,13 @@ class Vector2:
      def getY(self):
           return self.__Ycomponent
      
-     def get_cartesian(self):
-          return [self.getX(), self.getY()]
-     
      def get_magnitude(self):
           xSquared = (self.getX())**2
           ySquared = (self.getY())**2
           return (xSquared + ySquared)**(1/2)
      
-     def get_direction(self):
+     def get_theta(self):
           return math.atan2(self.getY(), self.getX())
-     
-     def get_polar(self):
-          return (self.get_magnitude(), self.get_direction())
-
      
      #setter
      def setX(self, value):
@@ -55,31 +48,19 @@ class Vector3(Vector2):
 
           self.__Zcomponent = Zcomponent
 
-     #getter - inherits getX and getY
+     #getter - inherits getX and getY and get_theta
 
      def getZ(self):
           return self.__Zcomponent
-     
-     def get_cartesian(self):
-          return [self.getX(), self.getY(), self.getZ()]
      
      def get_magnitude(self):
           xSquared = (self.getX())**2
           ySquared = (self.getY())**2
           zSquared = (self.getZ())**2
           return (xSquared + ySquared + zSquared)**(1/2)
-     
-     def get_theta(self):
-          theta = math.atan2(self.getY(), self.get_X())
 
      def get_phi(self):
           phi = math.acos(self.getZ(), self.get_magnitude())
-     
-     def get_direction(self):
-          return [self.get_theta(), self.get_phi()]
-     
-     def get_polar(self):
-          return [self.get_magnitude(), self.get_theta(), self.get_phi()]
      
      #setter - inherits setX and setY
      def setZ(self, value):
@@ -98,4 +79,90 @@ class Vector3(Vector2):
           self.updateX(dXvalue)
           self.updateY(dYvalue)
           self.updateZ(dZvalue)
+     
+class particle:
+     def __init__(self):
+          self.__displacement = Vector2(0,0)
+          self.__velocity = Vector2(0,0)
+          self.__acceleration = Vector2(0, -9.8)
+
+     #getter
+     def get_displacementX(self):
+          return self.__displacement.getX()
+
+     def get_displacementY(self):
+          return self.__displacement.getY()
+     
+     def get_displacement(self):
+          return self.get_displacementX(), self.get_displacementY()
+     
+     def get_velocityX(self):
+          return self.__velocity.getX()
+     
+     def get_velocityY(self):
+          return self.__velocity.getY()
+     
+     def get_velocity(self):
+          return self.get_velocityX(), self.get_velocityY
+     
+     def get_accelerationX(self):
+          return self.__acceleration.getX()
+     
+     def get_accelerationY(self):
+          return self.__acceleration.getY()
+     
+     def get_acceleration(self):
+            return self.get_accelerationX(), self.get_accelerationY
+     
+     #setters
+     def __set_displacementX(self, value):
+          self.__displacement.setX(value)
+     
+     def __set_displacementY(self, value):
+          self.__displacement.setY(value)
+
+     def set_displacement(self, Xvalue=None, Yvalue=None):
+          if Xvalue is not None:
+               self.set_displacementX(Xvalue)
+
+          if Yvalue is not None:
+               self.set_displacementY(Yvalue)
+     
+     def __set_velocityX(self, value):
+          self.__velocity.setX(value)
+     
+     def __set_velocityY(self, value):
+          self.__velocity.setY(value)
+     
+     def set_velocity(self, Xvalue=None, Yvalue=None):
+          if Xvalue is not None:
+               self.set_velocityX(Xvalue)
+
+          if Yvalue is not None:
+               self.set_velocityY(Yvalue)
+          
+     def __set_accelerationX(self, Xvalue):
+          self.__acceleration.setX(Xvalue)
+     
+     def __set_accelerationY(self, Yvalue):
+          self.__acceleration.setY(Yvalue)
+     
+     def set_acceleration(self, Xvalue, Yvalue):
+          if Xvalue is not None:
+               self.set_accelerationX(Xvalue)
+          
+          if Yvalue is not None:
+               self.set_accelerationY(Yvalue)
+          
+
+     #updater
+     def update_displacement(self):
+          new_displacementX = self.get_displacementX() + self.get_velocityX()
+          new_displacementY = self.get_displacementY() + self.get_velocityY()
+     
+     def update_velocity(self):
+          new_velocityX = self.get_velocityX() + self.get_accelerationX()
+          new_velocityY = self.get_velocityY() + self.get_accelerationY()
+     
+     
      
