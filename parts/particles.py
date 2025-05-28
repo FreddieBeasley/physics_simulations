@@ -82,12 +82,41 @@ class Vector3(Vector2):
           self.updateZ(dZvalue)
      
 class Particle:
-     def __init__(self):
-          self.__displacement = Vector2(0,0)
-          self.__velocity = Vector2(2,2.5)
-          self.__acceleration = Vector2(0, -0.0098)
+     def __init__(
+               self, 
+               colour = (204, 255, 229), 
+
+               radius=40, 
+               mass=10,
+
+               displacementX = 0,
+               displacementY = 0,
+               velocityX = 0,
+               velocityY = 0,
+               accelerationX = 0,
+               accelerationY = -0.001 
+          ):
+
+          self.__colour = colour
+
+          self.__radius = radius
+          self.__mass = mass
+
+          self.__displacement = Vector2(displacementX, displacementY)
+          self.__velocity = Vector2(velocityX, velocityY)
+          self.__acceleration = Vector2(accelerationX, accelerationY)
+
 
      #getter
+     def get_colour(self):
+          return self.__colour
+     
+     def get_radius(self):
+          return self.__radius
+     
+     def get_mass(self):
+          return self.__mass
+     
      def get_displacementX(self):
           return self.__displacement.getX()
 
@@ -104,8 +133,7 @@ class Particle:
           return self.__velocity.getY()
      
      def get_velocity(self):
-          return self.get_velocityX(), self.get_velocityY
-     
+          return self.get_velocityX(), self.get_velocityY()
      def get_accelerationX(self):
           return self.__acceleration.getX()
      
@@ -113,7 +141,7 @@ class Particle:
           return self.__acceleration.getY()
      
      def get_acceleration(self):
-            return self.get_accelerationX(), self.get_accelerationY
+            return self.get_accelerationX(), self.get_accelerationY()
      
      #setters
      def __set_displacementX(self, value):
@@ -162,9 +190,22 @@ class Particle:
           new_displacementY = self.get_displacementY() + self.get_velocityY()
 
           self.set_displacement(new_displacementX, new_displacementY)
-     
+
      def update_velocity(self):
           new_velocityX = self.get_velocityX() + self.get_accelerationX()
           new_velocityY = self.get_velocityY() + self.get_accelerationY()
 
           self.set_velocity(new_velocityX,new_velocityY)
+
+     def backtrack(self, fraction):
+          new_displacementX = self.get_displacementX() - (fraction * self.get_velocityX())
+          new_displacementY = self.get_displacementY() - (fraction * self.get_velocityY())
+
+          self.set_displacement((new_displacementX),(new_displacementY))
+     
+     def forwardtrack(self, fraction):
+          new_displacementX = self.get_displacementX() + (fraction * self.get_velocityX())
+          new_displacementY = self.get_displacementY() + (fraction * self.get_velocityY())
+
+          self.set_displacement((new_displacementX),(new_displacementY))
+     
