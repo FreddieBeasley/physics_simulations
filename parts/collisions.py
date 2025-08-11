@@ -33,16 +33,20 @@ def resolve_collision_1d(m1, m2, u1, u2, restitution) -> float:
 
      return v1, v2
 
-def get_centre_distance(particle1, particle2) -> float:
+def get_deltaX_distance(particle1, particle2) -> float:
      if not isinstance(particle1, Particle) or not isinstance(particle2, Particle):
-          raise TypeError("parametres must a Particle objects")
+          raise TypeError("parameters must be particle objects")
      
-     s1_x, s1_y = particle1.get_displacement()
-     s2_x, s2_y = particle2.get_displacement()
+     return abs(particle1.get_displacementX() - particle2.get_displacementX())
 
-     deltaX_squared = (s1_x - s2_x)**2
-     deltaY_squared = (s1_y - s2_y)**2
+def get_deltaY_distance(particle1, particle2) -> float:
+     if not isinstance(particle1, Particle) or not isinstance(particle2, Particle):
+          raise TypeError("parameters must be particle objects")
+     
+     return abs(particle1.get_displacementY() - particle2.get_displacementY())
 
-     distance = (deltaX_squared + deltaY_squared)**(1/2)
+def magnitude_2d(value1:float, value2:float) -> float:
+     return ((value1**2) + (value2**2))**(1/2)
 
-     return distance
+def get_centre_distance(particle1, particle2) -> float:
+     return magnitude_2d(get_deltaX_distance(particle1, particle2),get_deltaY_distance(particle1, particle2))
